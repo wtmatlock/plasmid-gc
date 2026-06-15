@@ -1,6 +1,6 @@
 # plasmid-gc
 
-## Reproducing Enterobacterales population analysis
+## Reproducing the Enterobacterales population analysis
 
 The bioinformatics pipeline for this component was run via Nextflow in `main.nf` and `nextflow.config`. It processes a sample of bacterial genomes as follows:
 
@@ -39,7 +39,7 @@ nextflow run main.nf
 
 The results from the pipeline can then be processed using `scripts/model.R`. 
 
-## Reproducing *Rhizobium leguminosarum* analysis
+## Reproducing the *Rhizobium leguminosarum* analysis
 
 You first need to download the data from NCBI with
 
