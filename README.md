@@ -4,7 +4,7 @@
 
 ### Bioinformatics pipeline
 
-The bioinformatics pipeline for this component was conducted via Nextflow in `main.nf` and `nextflow.config`. It processes a sample of bacterial genomes as follows:
+The bioinformatics pipeline for this component was run via Nextflow in `main.nf` and `nextflow.config`. It processes a sample of bacterial genomes as follows:
 
 1. Calculate the length and GC content of each contig
 2. Run MOB-typer and PlasmidFinder on all plasmids
@@ -15,7 +15,7 @@ In total, the our sample contained 5,136 contigs, of which 1,454 chromosomes and
 
 > Versus the original [study](https://doi.org/10.7554/eLife.85302), 4 genomes were dropped because the chromosomes appeared to be fragmented (`389ef33b-8677-40b6-b160-3102d31d3e2b`, `7ecf1e2e-3d06-4974-9de1-52e485d6d84e`, `cd636592-f493-4f64-9c0e-b6356dac56aa`, and `e525c3c4-6baa-42b8-a7c4-bd821511dea5`).
 
-Your file structure shold look like this:
+Your file structure should look like this:
 
 ```
 plasmid-gc/
@@ -50,5 +50,5 @@ The results from the pipeline can then be processed using `scripts/model.R`.
 You first need to download the data from NCBI with
 
 ```
-datasets download genome accession GCF_000009265.1 --include gbff58 --filename refseq gca9265.zip.
+datasets download genome accession GCF_000009265.1 --include gbff --filename refseq_gca9265.zip
 ```
