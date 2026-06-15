@@ -39,7 +39,7 @@ Before running, ensure that the `nextflow.config` file has the correct paths and
 nextflow run main.nf
 ```
 
-The results from the pipeline can then be processed using `scripts/model.R`. 
+The results from the pipeline can then be processed with `scripts/model.R`. 
 
 ## Reproducing the *Rhizobium leguminosarum* analysis
 
@@ -65,9 +65,4 @@ You can then run
 python3 rhizobium_gc.py
 ```
 
-This will write the file `rhizobium_gc.tsv`. Finally, run
-
-```
-Rscript rhizobium_model.R
-```
-This will reproduce the figure and run the model.
+This will write the file `rhizobium_gc.tsv`. The results can then be processed with `rhizobium_model.R`.
