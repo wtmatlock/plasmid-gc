@@ -51,7 +51,7 @@ You first need to download the data from NCBI with
 
 ```
 datasets download genome accession GCF_000009265.1 --include gbff --filename refseq_gca9265.zip
-unzip  refseq_gca9265.zip
+unzip refseq_gca9265.zip
 ```
 
 You also need to download [Supplementary File "pnas.2009094117.sd02.xlsx" from Wheatley et. al (2020)](https://pmc.ncbi.nlm.nih.gov/articles/instance/7519234/bin/pnas.2009094117.sd02.xlsx). Place them both in the same directory, alongside the scripts in `scripts/rhizobium_gc.py` and `scripts/rhizobium_model.R`. 
@@ -66,6 +66,11 @@ rhizobium_analysis/
 └── rhizobium_model.R
 ```
 
+You can then run
+```
+python3 rhizobium_gc.py
+```
 
+This will write the file `rhizobium_gc.tsv`.
 
 
