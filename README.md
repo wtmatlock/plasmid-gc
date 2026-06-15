@@ -71,6 +71,9 @@ You can then run
 python3 rhizobium_gc.py
 ```
 
-This will write the file `rhizobium_gc.tsv`. You can then run `rhizobium_model.R` to reproduce the figure and run the model.
+This will write the file `rhizobium_gc.tsv`. Finally, run
 
-
+```
+Rscript rhizobium_model.R
+```
+This will reproduce the figure and run the model.
