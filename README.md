@@ -21,8 +21,9 @@ Your file structure shold look like this:
 plasmid-gc/
 ├── nextflow.config                       # Nextflow config
 ├── main.nf                               # Nextflow script
-├── scripts/  
-│   └── contig_statistics.py
+├── scripts/
+│   ├── contig_statistics.py
+│   └── model.R
 ├── data/                                 # Input data
 │   ├── sample.csv
 │   └── assemblies/
@@ -36,3 +37,8 @@ Before running, ensure that the `nextflow.config` file has the correct paths and
 
 ```
 nextflow run main.nf
+```
+
+### Statistical modelling
+
+The results from the pipeline can then be processed using `scripts/model.R`. 
