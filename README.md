@@ -42,3 +42,13 @@ nextflow run main.nf
 ### Statistical modelling
 
 The results from the pipeline can then be processed using `scripts/model.R`. 
+
+## Reproducing *Rhizobium leguminosarum* analysis
+
+### Bioinformatics
+
+You first need to download the data from NCBI with
+
+```
+datasets download genome accession GCF_000009265.1 --include gbff58 --filename refseq gca9265.zip.
+```
