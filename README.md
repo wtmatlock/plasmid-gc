@@ -48,9 +48,7 @@ datasets download genome accession GCF_000009265.1 --include gbff --filename ref
 unzip refseq_gca9265.zip
 ```
 
-You also need to download [Supplementary File "pnas.2009094117.sd02.xlsx" from Wheatley et. al (2020)](https://pmc.ncbi.nlm.nih.gov/articles/instance/7519234/bin/pnas.2009094117.sd02.xlsx). Place them both in the same directory, alongside the scripts in `scripts/rhizobium_gc.py` and `scripts/rhizobium_model.R`. 
-
-Your file structure should look like this:
+You also need to download [Supplementary File "pnas.2009094117.sd02.xlsx" from Wheatley et. al (2020)](https://pmc.ncbi.nlm.nih.gov/articles/instance/7519234/bin/pnas.2009094117.sd02.xlsx). Place them both in the same directory, alongside the scripts `scripts/rhizobium_gc.py` and `scripts/rhizobium_model.R`. Your file structure should look like this:
 
 ```
 rhizobium_analysis/
