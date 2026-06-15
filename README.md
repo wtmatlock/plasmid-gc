@@ -1,5 +1,7 @@
 # plasmid-gc
 
+## Reproducing the PLSDB analysis
+
 ## Reproducing the Enterobacterales population analysis
 
 The bioinformatics pipeline for this component was run via Nextflow in `main.nf` and `nextflow.config`. It processes a sample of bacterial genomes as follows:
