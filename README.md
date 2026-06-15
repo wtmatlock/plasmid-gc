@@ -2,8 +2,6 @@
 
 ## Reproducing Enterobacterales population analysis
 
-### Bioinformatics pipeline
-
 The bioinformatics pipeline for this component was run via Nextflow in `main.nf` and `nextflow.config`. It processes a sample of bacterial genomes as follows:
 
 1. Calculate the length and GC content of each contig
@@ -39,13 +37,9 @@ Before running, ensure that the `nextflow.config` file has the correct paths and
 nextflow run main.nf
 ```
 
-### Statistical modelling
-
 The results from the pipeline can then be processed using `scripts/model.R`. 
 
 ## Reproducing *Rhizobium leguminosarum* analysis
-
-### Bioinformatics
 
 You first need to download the data from NCBI with
 
