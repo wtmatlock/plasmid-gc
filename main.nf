@@ -212,5 +212,5 @@ workflow {
         | RUN_MLST
 
     emit:
-    contig_stats
+    mlst_results
 }
