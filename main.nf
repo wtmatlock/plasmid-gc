@@ -123,10 +123,7 @@ process RUN_PLING {
     
     ls -d ${fasta_list.join(' ')} > input.txt
 
-    pling input.txt pling_results align \
-        --containment_distance 0.3 \
-        --cores $task.cpus \
-        --batch_size 2000
+    pling input.txt pling_results align --cores $task.cpus
     """
 }
 
@@ -215,5 +212,5 @@ workflow {
         | RUN_MLST
 
     emit:
-    chromosome_gene_igr_gc_ch
+    contig_stats
 }
