@@ -114,12 +114,18 @@ plot_df <- plsdb_df %>%
   inner_join(gc_df, by = "ASSEMBLY_ACC") %>%
   transmute(
     nuccore_uid = NUCCORE_UID.x,
+    accembly_acc = ASSEMBLY_ACC,
     plasmid_gc = NUCCORE_GC * 100,
     chromosome_gc = chromosomal_gc,
     chromosome_length = chromosome_length,
     species = TAXONOMY_species
   ) %>%
-  drop_na()
+  drop_na() %>%
+  distinct() %>%
+  filter(nuccore_uid != "2103093071") %>% # both weirdly low!
+  filter(nuccore_uid != "2720892846")
+  
+length(unique(plot_df$accembly_acc))
 
 cor.test(plot_df$chromosome_gc, plot_df$plasmid_gc, method = "pearson")
 
@@ -169,7 +175,7 @@ plot_df
 
 ggplot(plot_df, aes(x = chromosome_gc, y = plasmid_gc, colour = species_group)) +
   geom_point(data = filter(plot_df, species_group == "Other"), alpha = 0.3, size = 0.7) +
-  geom_point(data = filter(plot_df, species_group != "Other"), alpha = 0.3, size = 0.7) +
+  geom_point(data = filter(plot_df, species_group != "Other"), alpha = 0.7, size = 0.7) +
   geom_abline(slope = 1, intercept = 0, colour = "grey10", linetype="dashed") +
   scale_x_continuous(limits=c(0,100), expand=c(0,0)) +
   scale_y_continuous(limits=c(0,100), expand=c(0,0)) +
