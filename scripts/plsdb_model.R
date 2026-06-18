@@ -131,10 +131,13 @@ cor.test(plot_df$chromosome_gc, plot_df$plasmid_gc, method = "pearson")
 
 ### figure ###
 
-top10 <- plot_df %>%
+top10_df <- plot_df %>%
   count(species, sort = TRUE) %>%
-  head(10) %>%
-  pull(species)
+  head(10)
+
+top10 <- top10_df %>% pull(species)
+
+top10_clean <- str_replace_all(top10, "_", " ")
 
 plot_df <- plot_df %>%
   mutate(
@@ -144,7 +147,7 @@ plot_df <- plot_df %>%
   mutate(
     species_group = factor(
       species_group, 
-      levels = c(str_replace_all(top10, "_", " "), "Other")
+      levels = c(top10_clean, "Other") 
     )
   )
 
@@ -162,16 +165,13 @@ species_colours <- c(
   "grey70" # other
 )
 
-names(species_colours) <- levels(plot_df$species_group)
-
+names(species_colours) <- c(top10_clean, "Other")
 format_sp_labels <- function(breaks) {
   lapply(breaks, function(x) {
     if (is.na(x)) return(x)
     if (x == "Other") "Other" else bquote(italic(.(x)))
   })
 }
-
-plot_df
 
 ggplot(plot_df, aes(x = chromosome_gc, y = plasmid_gc, colour = species_group)) +
   geom_point(data = filter(plot_df, species_group == "Other"), alpha = 0.3, size = 0.7) +
@@ -182,6 +182,7 @@ ggplot(plot_df, aes(x = chromosome_gc, y = plasmid_gc, colour = species_group)) 
   scale_colour_manual(
     name = "Species",
     values = species_colours,
+    breaks = levels(plot_df$species_group), # Forces legend to respect factor levels
     labels = format_sp_labels
   ) +
   labs(
