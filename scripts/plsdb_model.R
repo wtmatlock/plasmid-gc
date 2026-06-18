@@ -29,7 +29,7 @@ assemblies <- assembly %>%
   distinct(ASSEMBLY_ACC) %>%
   filter(!is.na(ASSEMBLY_ACC))
 
-#writeLines(assemblies$ASSEMBLY_ACC, "accession_list.txt")
+writeLines(assemblies$ASSEMBLY_ACC, "accession_list.txt")
 
 ### NCBI datasets download ###
 
@@ -182,7 +182,7 @@ ggplot(plot_df, aes(x = chromosome_gc, y = plasmid_gc, colour = species_group)) 
   scale_colour_manual(
     name = "Species",
     values = species_colours,
-    breaks = levels(plot_df$species_group), # Forces legend to respect factor levels
+    breaks = levels(plot_df$species_group),
     labels = format_sp_labels
   ) +
   labs(
