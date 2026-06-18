@@ -1,6 +1,7 @@
 # plasmid-gc
 
 ## Reproducing the PLSDB analysis
+Make sure you have NCBI's datasets installed (e.g. [via Conda](https://anaconda.org/channels/conda-forge/packages/ncbi-datasets-cli/overview)). You can then run `plsdb_model.R`, adding your NCBI API key to the terminal command.
 
 ## Reproducing the Enterobacterales population analysis
 
