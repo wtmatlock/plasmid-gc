@@ -82,8 +82,8 @@ plot <- ggplot(data_plot, aes(x = as.factor(count), y = delta_value, color = at_
   ) +
   labs(
     x = "Essential niche count",
-    y = "",
-    color = "GC-content\nhigher on:"
+    y = "Relative GC content",
+    color = "GC content\nhigher on:"
   ) +
   theme_minimal() +
   theme(
