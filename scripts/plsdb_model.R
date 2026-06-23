@@ -186,8 +186,8 @@ ggplot(plot_df, aes(x = chromosome_gc, y = plasmid_gc, colour = species_group)) 
     labels = format_sp_labels
   ) +
   labs(
-    x = "Host chromosome GC-content",
-    y = "Plasmid GC-content"
+    x = "Host chromosome GC content",
+    y = "Plasmid GC content"
   ) +
   theme_minimal() +
   theme(
