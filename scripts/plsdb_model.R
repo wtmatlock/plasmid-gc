@@ -3,6 +3,12 @@
 library(tidyverse)
 library(Biostrings)
 library(janitor)
+library(cowplot)
+library(ggplot2)
+library(ggExtra)
+
+setwd("~")
+setwd("~/Desktop/2026_plasmid_gc/PLSDB_analysis")
 
 nuccore <- read_csv("plsdb/nuccore.csv", show_col_types = FALSE) %>%
   mutate(NUCCORE_UID = as.character(NUCCORE_UID))
@@ -173,9 +179,9 @@ format_sp_labels <- function(breaks) {
   })
 }
 
-ggplot(plot_df, aes(x = chromosome_gc, y = plasmid_gc, colour = species_group)) +
-  geom_point(data = filter(plot_df, species_group == "Other"), alpha = 0.3, size = 0.7) +
-  geom_point(data = filter(plot_df, species_group != "Other"), alpha = 0.7, size = 0.7) +
+p_gc <- ggplot(plot_df, aes(x = chromosome_gc, y = plasmid_gc, colour = species_group)) +
+  geom_point(data = filter(plot_df, species_group == "Other"), alpha = 0.6, size = 1) +
+  geom_point(data = filter(plot_df, species_group != "Other"), alpha = 0.6, size = 1) +
   geom_abline(slope = 1, intercept = 0, colour = "grey10", linetype="dashed") +
   scale_x_continuous(limits=c(0,100), expand=c(0,0)) +
   scale_y_continuous(limits=c(0,100), expand=c(0,0)) +
@@ -201,3 +207,26 @@ ggplot(plot_df, aes(x = chromosome_gc, y = plasmid_gc, colour = species_group)) 
     axis.text.x = element_text(color = "black"),
     axis.text.y = element_text(color = "black")
   )
+
+p_gc_marginal <- ggMarginal(
+  p_gc + theme(legend.position = "none"),
+  type = "density",
+  margins = "both",
+  groupColour = FALSE,
+  size = 5,
+  fill = "grey85",
+  colour = "grey40"
+)
+
+# extract legend
+legend <- get_legend(p_gc)
+
+# combine plot and external legend
+p_combined <- plot_grid(
+  p_gc_marginal,
+  legend,
+  rel_widths = c(1, 0.25),
+  align = "h"
+)
+
+p_combined
