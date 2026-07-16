@@ -517,7 +517,7 @@ species_labels <- c(
   untyped               = "'Untyped'"
 )
 
-common_theme <- theme_minimal(base_size = 14) +
+common_theme <- theme_minimal(base_size = 12) +
   theme(
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
@@ -574,6 +574,16 @@ p_gc <-
     breaks = species_order,
     labels = function(x) parse(text = species_labels[x])
   ) +
+  scale_x_continuous(
+    breaks = seq(40, 55, by = 5),
+    limits = c(37, 60),
+    expand = c(0, 0)
+  ) +
+  scale_y_continuous(
+    breaks = seq(35, 55, by = 5),
+    limits = c(30, 59),
+    expand = c(0, 0)
+  ) +
   labs(
     x = "Host chromosome GC content",
     y = "Plasmid GC content"
@@ -599,7 +609,7 @@ p_combined <- (
     (wrap_elements(p_gc_marginal) + theme(plot.tag = tag_style))
 ) +
   plot_layout(
-    heights = c(1, 2),
+    heights = c(1.5, 2),
     guides = "collect"
   ) +
   plot_annotation(tag_levels = 'a') &
