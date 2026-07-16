@@ -517,7 +517,7 @@ species_labels <- c(
   untyped               = "'Untyped'"
 )
 
-common_theme <- theme_minimal(base_size = 12) +
+common_theme <- theme_minimal(base_size = 10) +
   theme(
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
