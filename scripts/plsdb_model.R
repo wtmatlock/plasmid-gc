@@ -6,6 +6,7 @@ library(janitor)
 library(cowplot)
 library(ggplot2)
 library(ggExtra)
+library(ggplotify)
 
 setwd("~")
 setwd("~/Desktop/2026_plasmid_gc/PLSDB_analysis")
@@ -208,6 +209,7 @@ p_gc <- ggplot(plot_df, aes(x = chromosome_gc, y = plasmid_gc, colour = species_
     axis.text.y = element_text(color = "black")
   )
 
+
 p_gc_marginal <- ggMarginal(
   p_gc + theme(legend.position = "none"),
   type = "density",
@@ -218,15 +220,28 @@ p_gc_marginal <- ggMarginal(
   colour = "grey40"
 )
 
-# extract legend
-legend <- get_legend(p_gc)
-
-# combine plot and external legend
-p_combined <- plot_grid(
-  p_gc_marginal,
-  legend,
-  rel_widths = c(1, 0.25),
-  align = "h"
+legend <- get_legend(
+  p_gc +
+    theme(
+      legend.position = "right",
+      legend.box.margin = margin(0, 0, 0, 0)
+    )
 )
+
+p_combined <- ggdraw() +
+  draw_grob(
+    as.grob(p_gc_marginal),
+    x = 0,
+    y = 0,
+    width = 1,
+    height = 1
+  ) +
+  draw_grob(
+    legend,
+    x = 0.078, 
+    y = 0.48, 
+    width = 0.25,
+    height = 0.35
+  )
 
 p_combined
