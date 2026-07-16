@@ -40,7 +40,7 @@ Before running, ensure that the `nextflow.config` file has the correct paths and
 nextflow run main.nf
 ```
 
-The results from the pipeline can then be processed with `scripts/model.R`. 
+The results from the pipeline can then be processed with `scripts/enterobacterales_model.R`, run from the `results` directory. 
 
 ## Reproducing the *Rhizobium leguminosarum* analysis
 
