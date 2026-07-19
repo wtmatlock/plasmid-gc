@@ -136,6 +136,11 @@ length(unique(plot_df$accembly_acc))
 
 cor.test(plot_df$chromosome_gc, plot_df$plasmid_gc, method = "pearson")
 
+plot_df_ecoli <- plot_df %>%
+  filter(species == "Escherichia_coli")
+
+cor.test(plot_df_ecoli$chromosome_gc, plot_df_ecoli$plasmid_gc, method = "pearson")
+
 ### figure ###
 
 top10_df <- plot_df %>%
