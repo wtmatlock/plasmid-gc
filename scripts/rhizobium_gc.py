@@ -12,8 +12,38 @@ FOUR_FOLD = {
     'CTT','CTC','CTA','CTG'   # Leu (part)
 }
 
+# core region: drop start codon + first 11 codons (Lewin et al. 2023 5' window)
+# and the last 10 codons + stop codon
+CORE_5P = 12
+CORE_3P = 11
+
 input_file = "ncbi_dataset/data/GCF_000009265.1/genomic.gbff"
 output_file = "rhizobium_gc.tsv"
+
+
+def codon_gc(codons):
+    """Return gc1, gc2, gc3, gc4 (percent, or 'NA') for a list of codons."""
+    if not codons:
+        return 'NA', 'NA', 'NA', 'NA'
+    counts = [0, 0, 0]
+    fourfold_count = 0
+    gc4_count = 0
+    for codon in codons:
+        for pos in range(3):
+            if codon[pos] in ('G','C'):
+                counts[pos] += 1
+        if codon in FOUR_FOLD:
+            fourfold_count += 1
+            if codon[2] in ('G','C'):
+                gc4_count += 1
+    n = len(codons)
+    gc4 = (gc4_count / fourfold_count) * 100 if fourfold_count > 0 else 'NA'
+    return counts[0] / n * 100, counts[1] / n * 100, counts[2] / n * 100, gc4
+
+
+def fmt(x):
+    return f"{x:.2f}" if x != 'NA' else 'NA'
+
 
 records = []
 
@@ -38,44 +68,40 @@ for record in SeqIO.parse(input_file, "genbank"):
             total = len(seq_str)
             gc_content = (gc / total * 100) if total > 0 else 0
 
-            # GC1, GC2, GC3, GC4
+            # GC1, GC2, GC3, GC4 (whole gene, and core region)
             gc1 = gc2 = gc3 = gc4 = 'NA'
-            n_codons = fourfold_count = 'NA'
+            gc1_core = gc2_core = gc3_core = gc4_core = 'NA'
+            core_codons = 0
             if total % 3 == 0 and total > 0:
-                n_codons = total // 3
-                counts = [0, 0, 0]
-                fourfold_count = 0
-                gc4_count = 0
-                for i in range(n_codons):
-                    codon = seq_str[3*i:3*i+3]
-                    for pos in range(3):
-                        if codon[pos] in ('G','C'):
-                            counts[pos] += 1
-                    if codon in FOUR_FOLD:
-                        fourfold_count += 1
-                        if codon[2] in ('G','C'):
-                            gc4_count += 1
-                if n_codons:
-                    gc1 = (counts[0] / n_codons) * 100
-                    gc2 = (counts[1] / n_codons) * 100
-                    gc3 = (counts[2] / n_codons) * 100
-                if fourfold_count > 0:
-                    gc4 = (gc4_count / fourfold_count) * 100
+                codons = [seq_str[3*i:3*i+3] for i in range(total // 3)]
+                gc1, gc2, gc3, gc4 = codon_gc(codons)
+                core = codons[CORE_5P:len(codons) - CORE_3P]
+                core_codons = len(core)
+                gc1_core, gc2_core, gc3_core, gc4_core = codon_gc(core)
 
             records.append({
                 "old_locus_tag": locus,
                 "replicon": replicon,
                 "length": total,
                 "gc_content": f"{gc_content:.2f}",
-                "gc1": f"{gc1:.2f}" if gc1 != 'NA' else 'NA',
-                "gc2": f"{gc2:.2f}" if gc2 != 'NA' else 'NA',
-                "gc3": f"{gc3:.2f}" if gc3 != 'NA' else 'NA',
-                "gc4": f"{gc4:.2f}" if gc4 != 'NA' else 'NA'
+                "gc1": fmt(gc1),
+                "gc2": fmt(gc2),
+                "gc3": fmt(gc3),
+                "gc4": fmt(gc4),
+                "core_codons": core_codons,
+                "gc1_core": fmt(gc1_core),
+                "gc2_core": fmt(gc2_core),
+                "gc3_core": fmt(gc3_core),
+                "gc4_core": fmt(gc4_core)
             })
 
+columns = ["old_locus_tag", "replicon", "length", "gc_content",
+           "gc1", "gc2", "gc3", "gc4",
+           "core_codons", "gc1_core", "gc2_core", "gc3_core", "gc4_core"]
+
 with open(output_file, "w") as out:
-    out.write("old_locus_tag\treplicon\tlength\tgc_content\tgc1\tgc2\tgc3\tgc4\n")
+    out.write("\t".join(columns) + "\n")
     for rec in records:
-        out.write(f"{rec['old_locus_tag']}\t{rec['replicon']}\t{rec['length']}\t{rec['gc_content']}\t{rec['gc1']}\t{rec['gc2']}\t{rec['gc3']}\t{rec['gc4']}\n")
+        out.write("\t".join(str(rec[c]) for c in columns) + "\n")
 
 print(f"Results written to {output_file}")
